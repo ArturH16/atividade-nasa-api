@@ -1,0 +1,64 @@
+<div class="carousel">
+  <div class="carousel-images" id="carouselImages">
+    {{#each dadosFiltrados}}
+        <div class="card">
+            <h2>{{title}}</h2>
+            <img src="{{hdurl}}" alt="{{title}}">
+        </div>
+    {{/each}}
+  </div>
+  
+  <!-- Botões de navegação -->
+  <button class="btn prev" id="prevBtn">&#10094;</button>
+  <button class="btn next" id="nextBtn">&#10095;</button>
+</div>
+
+
+<script>
+    const imgs = document.getElementById("carouselImages");
+const cards = document.querySelectorAll(".carousel-images .card");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+let idx = 0;
+
+function moverCarrossel() {
+  imgs.style.transform = `translateX(${-idx * 100}%)`;
+}
+
+function proximaImagem() {
+  idx++;
+  if (idx > cards.length - 1) {
+    idx = 0;
+  }
+  moverCarrossel();
+}
+
+function imagemAnterior() {
+  idx--;
+  if (idx < 0) {
+    idx = cards.length - 1;
+  }
+  moverCarrossel();
+}
+
+// Troca automática a cada 4 segundos
+let interval = setInterval(proximaImagem, 4000);
+
+function resetInterval() {
+  clearInterval(interval);
+  interval = setInterval(proximaImagem, 4000);
+}
+
+// Eventos dos botões
+nextBtn.addEventListener("click", () => {
+  proximaImagem();
+  resetInterval();
+});
+
+prevBtn.addEventListener("click", () => {
+  imagemAnterior();
+  resetInterval();
+});
+
+</script>
